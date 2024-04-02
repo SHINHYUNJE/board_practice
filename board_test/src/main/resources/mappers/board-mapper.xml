@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.board.mapper.BoardMapper">
+
+	<select id="findAll" resultType="com.example.board.domain.BoardVO">
+		SELECT * FROM board
+	</select>
+
+	<select id="findByBoardSn" parameterType="int"
+		resultType="com.example.board.domain.BoardVO">
+		SELECT * FROM board WHERE board_sn = #{boardSn}
+	</select>
+
+	<insert id="insert" parameterType="com.example.board.domain.BoardVO">
+		INSERT INTO board (title,
+		content, author) VALUES (#{title}, #{content},
+		#{author})
+	</insert>
+
+	<update id="update" parameterType="com.example.board.domain.BoardVO">
+		UPDATE board SET title =
+		#{title}, content = #{content}, author = #{author}
+		WHERE board_sn =
+		#{boardSn}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE FROM board WHERE
+		board_sn = #{boardSn}
+	</delete>
+
+</mapper>

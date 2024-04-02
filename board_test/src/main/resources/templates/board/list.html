@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{fragments/layout}">
+<head>
+<meta charset="UTF-8">
+<title>LIST</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<h3>MULTIBOARD</h3>
+		<table class="table table-striped">
+			<caption>MULTIBOARD - MVC1</caption>
+			<thead>
+				<tr>
+					<th scope="col">NO</th>
+					<th scope="col">TITLE</th>
+					<th scope="col">WRITER</th>
+					<th scope="col">DATE</th>
+					<th scope="col">HIT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dto, index : ${list}">
+					<td th:text="${list.size() - index.count + 1}">인덱스</td>
+					<td><a th:href="@{|/board/select/${dto.bno}|}"
+						th:text="${dto.btitle}">제목</a></td>
+					<td th:text="${dto.bname}">작성자</td>
+					<td th:text="${dto.createDate}">날짜</td>
+					<td th:text="${dto.bhit}">조회수</td>
+				</tr>
+			</tbody>
+		</table>
+		<p class="text-right">
+			<a th:href="@{/board/insert}" class="btn btn-danger">글쓰기</a>
+		</p>
+	</div>
+</body>
+</html>
+<!-- http://localhost:8686/boot6/board/list -->
