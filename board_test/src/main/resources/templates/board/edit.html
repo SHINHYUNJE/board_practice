@@ -15,26 +15,26 @@
 
 			<fieldset>
 				<legend> UPDATE</legend>
-				<input type="hidden" name="bno" id="bno" class="form-control"
-					th:value="${dto.bno}">
+				<input type="hidden" name="boardSn" id="boardSn" class="form-control"
+					th:value="${dto.boardSn}">
 
 				<div class="form-group">
-					<label for="bname">이름</label> <input type="text" name="bname"
-						id="bname" class="form-control" th:value="${dto.bname}" disabled>
+					<label for="author">이름</label> <input type="text" name="author"
+						id="author" class="form-control" th:value="${dto.author}" disabled>
 				</div>
-				<div class="form-group">
+				<!-- <div class="form-group">
 					<label for="bpass">비밀번호</label> <input type="password" name="bpass"
 						id="bpass" class="form-control"> <span>(*) 수정, 삭제시
 						필수</span>
+				</div> -->
+				<div class="form-group">
+					<label for="title">제목</label> <input type="text" name="title"
+						id="title" class="form-control" th:value="${dto.title}">
 				</div>
 				<div class="form-group">
-					<label for="btitle">제목</label> <input type="text" name="btitle"
-						id="btitle" class="form-control" th:value="${dto.btitle}">
-				</div>
-				<div class="form-group">
-					<label for="bcontent">내용</label>
-					<textarea name="bcontent" id="bcontent" cols="60" rows="10"
-						class="form-control" th:text="${dto.bcontent}"></textarea>
+					<label for="content">내용</label>
+					<textarea name="content" id="content" cols="60" rows="10"
+						class="form-control" th:text="${dto.content}"></textarea>
 				</div>
 				<div class="form-group  text-right">
 					<input type="submit" value="입력" class="btn btn-danger"> <input

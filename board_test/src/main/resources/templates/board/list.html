@@ -17,17 +17,17 @@
 					<th scope="col">TITLE</th>
 					<th scope="col">WRITER</th>
 					<th scope="col">DATE</th>
-					<th scope="col">HIT</th>
+					<!--<th scope="col">HIT</th>-->
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="dto, index : ${list}">
 					<td th:text="${list.size() - index.count + 1}">인덱스</td>
-					<td><a th:href="@{|/board/select/${dto.bno}|}"
-						th:text="${dto.btitle}">제목</a></td>
-					<td th:text="${dto.bname}">작성자</td>
-					<td th:text="${dto.createDate}">날짜</td>
-					<td th:text="${dto.bhit}">조회수</td>
+					<td><a th:href="@{|/board/select/${dto.boardSn}|}"
+						th:text="${dto.title}">제목</a></td>
+					<td th:text="${dto.author}">작성자</td>
+					<td th:text="${dto.createdAt}">날짜</td>
+					<!-- <td th:text="${dto.bhit}">조회수</td> -->
 				</tr>
 			</tbody>
 		</table>

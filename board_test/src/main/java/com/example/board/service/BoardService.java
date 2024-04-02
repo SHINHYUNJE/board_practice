@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.board.domain.BoardVO;
 
 public interface BoardService {
+
 	List<BoardVO> findAll();
 
 	BoardVO findByBoardSn(int boardSn);
