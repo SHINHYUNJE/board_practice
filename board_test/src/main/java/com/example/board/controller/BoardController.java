@@ -23,6 +23,11 @@ public class BoardController {
 		this.service = service;
 	}
 
+	@GetMapping("/board/test")
+	public String test_ext() {
+		return "board/ext_test";
+	}
+
 	@GetMapping("/board/list")
 	public String list(Model model) {
 		model.addAttribute("list", service.findAll());
