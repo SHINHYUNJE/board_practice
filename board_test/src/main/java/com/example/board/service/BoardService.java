@@ -12,7 +12,7 @@ public interface BoardService {
 
 	int save(BoardVO board);
 
-	int update(BoardVO board);
+	int update(int boardSn, BoardVO board);
 
 	int delete(int boardSn);
 }

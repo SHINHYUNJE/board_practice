@@ -34,8 +34,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int update(BoardVO board) {
-		return boardMapper.update(board);
+	public int update(int boardSn, BoardVO board) {
+		return boardMapper.update(boardSn, board);
 	}
 
 	@Override

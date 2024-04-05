@@ -1,73 +1,92 @@
 package com.example.board.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.board.domain.BoardVO;
 import com.example.board.service.BoardService;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/boards")
 @Slf4j
 public class BoardController {
 
-	private final BoardService service;
+	private final BoardService boardService;
 
 	@Autowired
-	public BoardController(BoardService service) {
-		this.service = service;
+	public BoardController(BoardService boardService) {
+		this.boardService = boardService;
 	}
 
-	@GetMapping("/board/test")
-	public String test_ext() {
-		return "board/ext_test";
+	// 게시글 목록 조회
+	@GetMapping
+	public Map<String, Object> getAllBoards() {
+		log.info("도착 .................................");
+		List<BoardVO> boards = boardService.findAll();
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", "success");
+		response.put("data", boards);
+		return response;
 	}
 
-	@GetMapping("/board/list")
-	public String list(Model model) {
-		model.addAttribute("list", service.findAll());
-		return "board/list";
+	// 게시글 상세 조회
+	@GetMapping("/{boardSn}")
+	public Map<String, Object> getBoard(@PathVariable("boardSn") int boardSn) {
+		BoardVO board = boardService.findByBoardSn(boardSn);
+		Map<String, Object> response = new HashMap<>();
+		if (board != null) {
+			response.put("status", "success");
+			response.put("data", board);
+		} else {
+			response.put("status", "error");
+			response.put("message", "Board not found");
+		}
+		return response;
 	}
 
-	@GetMapping("/board/select/{boardSn}")
-	public String select(@PathVariable("boardSn") int boardSn, Model model) {
-		model.addAttribute("dto", service.findByBoardSn(boardSn));
-		return "board/detail";
+	// 게시글 생성
+	@PostMapping
+	public Map<String, Object> createBoard(@RequestBody BoardVO board) {
+		int result = boardService.save(board);
+		Map<String, Object> response = new HashMap<>();
+		response.put("status", "success");
+		response.put("data", result);
+		return response;
 	}
 
-	@GetMapping("/board/insert")
-	public String insert() {
-		return "board/write";
+	// 게시글 수정
+	@PutMapping("/{boardSn}")
+	public Map<String, Object> updateBoard(@PathVariable("boardSn") int boardSn, @RequestBody BoardVO board) {
+		int result = boardService.update(boardSn, board);
+		Map<String, Object> response = new HashMap<>();
+		if (result > 0) {
+			response.put("status", "success");
+			response.put("data", result);
+		} else {
+			response.put("status", "error");
+			response.put("message", "Board not found");
+		}
+		return response;
 	}
 
-	@PostMapping("/board/insert")
-	public String insert_(BoardVO board) {
-		service.save(board);
-		return "redirect:/board/list";
+	// 게시글 삭제
+	@DeleteMapping("/{boardSn}")
+	public Map<String, Object> deleteBoard(@PathVariable("boardSn") int boardSn) {
+		int isDeleted = boardService.delete(boardSn);
+		Map<String, Object> response = new HashMap<>();
+		if (isDeleted > 0) {
+			response.put("status", "success");
+			response.put("message", "Board deleted successfully");
+		} else {
+			response.put("status", "error");
+			response.put("message", "Board not found");
+		}
+		return response;
 	}
-
-	@GetMapping("/board/update/{boardSn}")
-	public String update(@PathVariable("boardSn") int boardSn, Model model) {
-		model.addAttribute("dto", service.findByBoardSn(boardSn));
-		return "/board/edit";
-	}
-
-	@PostMapping("/board/update")
-	public String update_(BoardVO board) { // disabled 설정되있는 컬럼 안가져옴
-		log.info("업데이트 : " + board.toString());
-		service.update(board);
-		return "redirect:/board/select/" + board.getBoardSn();
-	}
-
-	@GetMapping("/board/delete/{boardSn}")
-	public String delete_(@PathVariable("boardSn") int boardSn) {
-		service.delete(boardSn);
-		return "redirect:/board/list";
-	}
-
 }

@@ -27,12 +27,21 @@ class BoardTestApplicationTests {
 	}
 
 	@Test
-	@Disabled
+	//@Disabled
 	void testMapper() {
-		System.out.println(mapper.findAll());
+		BoardVO vo = new BoardVO();
+
+		vo.setContent("8번 내용수정");
+		vo.setTitle("8번 제목수정");
+		vo.setAuthor("신현제");
+
+		System.out.println(mapper.update(8, vo));
+		//log.info("result : " + mapper.findAll());
+
 	}
 
 	@Test
+	@Disabled
 	void testService() {
 		log.info("result : " + service.findAll().toString());
 		log.info("result : " + service.findByBoardSn(1).toString());
@@ -44,8 +53,6 @@ class BoardTestApplicationTests {
 		vo.setAuthor("신현제");
 
 		log.info("result : " + service.save(vo));
-		
-
 	}
 
 }

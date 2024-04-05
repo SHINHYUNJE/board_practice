@@ -3,6 +3,7 @@ package com.example.board.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.board.domain.BoardVO;
 
@@ -14,7 +15,7 @@ public interface BoardMapper {
 
 	int insert(BoardVO board);
 
-	int update(BoardVO board);
+	int update(@Param("boardSn") int boardSn, @Param("board") BoardVO board);
 
 	int delete(int boardSn);
 }
