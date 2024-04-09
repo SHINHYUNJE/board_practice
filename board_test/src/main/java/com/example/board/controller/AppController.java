@@ -8,6 +8,7 @@ public class AppController {
 
 	@GetMapping("/")
 	public String index() {
-		return "index"; // src/main/resources/templates/index.html을 반환
+		return "index"; // src/main/resources/templates/index.html
 	}
+
 }
