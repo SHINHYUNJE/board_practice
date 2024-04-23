@@ -5,7 +5,7 @@
 - MySQL 8.0.36
 - MyBatis 2.1.4
 - Thymeleaf
-- Ext JS 4.2.1
+- Ext JS 6.2.0
 
 ## **데이터베이스 생성**
 
