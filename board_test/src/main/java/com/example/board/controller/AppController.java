@@ -10,5 +10,10 @@ public class AppController {
 	public String index() {
 		return "index"; // src/main/resources/templates/index.html
 	}
+	
+	@GetMapping("/test1")
+	public String test1() {
+		return "test"; // src/main/resources/templates/test.html
+	}
 
 }

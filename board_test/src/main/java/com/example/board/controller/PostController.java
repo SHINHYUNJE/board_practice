@@ -26,6 +26,7 @@ public class PostController {
 
 	// 게시글 목록 조회
 	@GetMapping
+	@ResponseBody
 	public Map<String, Object> getAllBoards() {
 		log.info("list ...................");
 		List<BoardVO> boards = boardService.findAll();
@@ -37,6 +38,7 @@ public class PostController {
 
 	// 게시글 상세 조회
 	@GetMapping("/{boardSn}")
+	@ResponseBody
 	public Map<String, Object> getBoard(@PathVariable("boardSn") int boardSn) {
 		// log.info("list ...................");
 
@@ -54,6 +56,7 @@ public class PostController {
 
 	// 게시글 생성
 	@PostMapping
+	@ResponseBody
 	public Map<String, Object> createBoard(@RequestBody BoardVO board) {
 		log.info("create ...................");
 		log.info("...." + board);
@@ -66,12 +69,15 @@ public class PostController {
 	}
 
 	// 게시글 수정
-	@PutMapping
-	public Map<String, Object> updateBoard(@RequestBody BoardVO board) {
+	@PutMapping("/{boardSn}")
+	@ResponseBody
+	public Map<String, Object> updateBoard(@PathVariable("boardSn") int boardSn, @RequestBody BoardVO board) {
 		log.info("update ...................");
 		log.info("...." + board);
 
-		int result = boardService.update(board.getBoardSn(), board);
+		board.setBoardSn(boardSn); // 경로에서 받은 boardSn을 설정해야 합니다.
+
+		int result = boardService.update(boardSn, board);
 		Map<String, Object> response = new HashMap<>();
 		if (result > 0) {
 			response.put("status", "success");
@@ -84,12 +90,13 @@ public class PostController {
 	}
 
 	// 게시글 삭제
-	@DeleteMapping
-	public Map<String, Object> deleteBoard(@RequestBody BoardVO board) {
+	@DeleteMapping("/{boardSn}")
+	@ResponseBody
+	public Map<String, Object> deleteBoard(@PathVariable("boardSn") int boardSn) {
 		log.info("delete ...................");
-		log.info("...." + board);
-		
-		int isDeleted = boardService.delete(board.getBoardSn());
+		log.info("....boardSn: " + boardSn);
+
+		int isDeleted = boardService.delete(boardSn);
 		Map<String, Object> response = new HashMap<>();
 		if (isDeleted > 0) {
 			response.put("status", "success");
@@ -100,4 +107,5 @@ public class PostController {
 		}
 		return response;
 	}
+
 }
