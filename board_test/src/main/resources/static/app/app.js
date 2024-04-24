@@ -21,7 +21,7 @@ Ext.onReady(function () {
 
   var treePanel = Ext.create('Ext.tree.Panel', {
     title: '카테고리 목록', // 트리 패널의 제목 설정
-    flex: 1, // 트리 패널이 차지하는 영역의 비율 설정
+    width: '10%', // 트리 패널이 차지하는 영역의 비율 설정
     height: '100%', // 트리 패널의 높이 설정
     store: treeStore, // 트리 패널에 데이터 저장소 연결
     rootVisible: true, // 루트 노드 표시 여부 설정
@@ -67,6 +67,9 @@ Ext.onReady(function () {
       text: '게시글 보기', // 버튼 텍스트 설정
       handler: function () {
         var selection = grid.getView().getSelectionModel().getSelection()[0]; // 선택된 레코드 가져오기
+        console.log(grid);
+        console.log(grid.getView().getSelectionModel().getSelection());
+        console.log(grid.getView().getSelectionModel().getSelection()[0]);
         if (selection) {
           showEditForm(selection); // 선택된 레코드의 내용으로 게시글 보기 폼 표시 함수 호출
         } else {
@@ -176,8 +179,8 @@ Ext.onReady(function () {
     win.show(); // 윈도우 표시
   }
 
-  // 컨테이너 생성 및 배치
-  var container = Ext.create('Ext.container.Container', {
+  //컨테이너 생성 및 배치
+  var container = Ext.create('Ext.container.Viewport', {
     width: '100%', // 컨테이너 너비 설정
     height: 900, // 컨테이너 높이 설정
     layout: 'hbox', // 컨테이너 레이아웃 설정
@@ -186,6 +189,7 @@ Ext.onReady(function () {
       treePanel, grid // 트리 패널과 그리드 패널 추가
     ]
   });
+
 
 });
 
