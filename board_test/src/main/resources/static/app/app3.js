@@ -36,11 +36,13 @@ Ext.onReady(function () {
             url: 'api/boards',
             reader: {
                 type: 'json',
-                root: 'data'
+                root: 'data',
+                totalProperty: 'total' // 전체 레코드 수를 나타내는 필드 이름
             }
         },
         autoLoad: true,
-        autoSync: true
+        autoSync: true,
+        pageSize: 25 // 한 페이지에 표시할 레코드 수
     });
 
     // BoardStore 생성
@@ -58,7 +60,7 @@ Ext.onReady(function () {
         }, {
             text: '작성자', dataIndex: 'author', width: 100
         }, {
-            text: '작성일', dataIndex: 'boardSn', width: 150
+            text: '작성일', dataIndex: 'createdAt', width: 150
         }],
         title: '게시판',
         split: true,
@@ -101,11 +103,15 @@ Ext.onReady(function () {
                 disabled: true
             }
         ],
+        bbar: Ext.create('Ext.toolbar.Paging', {
+            store: store, // 스토어 지정
+            displayInfo: true // 페이징 정보 표시 여부
+        }),
         listeners: {
-            itemdblclick: function (view,record) {
+            itemdblclick: function (view, record) {
                 showEditForm(record);
             },
-            selectionchange: function (selModel,selections) {
+            selectionchange: function (selModel, selections) {
                 grid.down('#editButton').setDisabled(selections.length === 0);
                 grid.down('#deleteButton').setDisabled(selections.length === 0);
             }
